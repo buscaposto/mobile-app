@@ -44,6 +44,5 @@ const styles = StyleSheet.create({
 		maxHeight: 50,
 		maxWidth: 50,
 		marginLeft: '10%'
-
 	}
 })
