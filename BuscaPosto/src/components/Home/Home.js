@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import MapView from 'react-native-maps';
 import SplashScreen from 'react-native-splash-screen';
-
 import NotificationBubble from '../NotificationBubble/NotificationBubble';
 import FindButton from '../FindButton/FindButton'
 
@@ -17,12 +16,36 @@ import FindButton from '../FindButton/FindButton'
 export default class Home extends Component{
     constructor(props){
         super(props);
+        this.state = {
+        	searching: false,
+        }
     }
 
-    componentDidMount(){
-    	SplashScreen.hide();
+    // making a function that switchs which components appears in the home screen
+    // IF it is searching for a station the station list, if not, the find button
+    setHomeComponents(){
+    	if (this.state.searching == true){
+    		return(
+    			<View 
+    			style = {{height: '50%', borderRadius: 5, width: '100%', backgroundColor: '#2D2D2D'}}
+    			onPress = {() => this.setState({searching:false})}
+    			>
+    				<Text style = {{fontSize: 32, color: '#FFF'}}>HELLOOOOO</Text>
+    			</View>
+    			)
+    	}else{
+    		return(
+    				<FindButton 
+			    	navigation = {this.props.navigation} 
+			    	findGas = {() => 
+			    		this.setState({searching: true})}
+			    	/>
+    			)
+    	}
     }
 
+    // setting the navigation options, like title and some buttons
+    // the station form and user settings button are created here.
     static navigationOptions = ({navigation}) => ({
 			title: 'HOME',
 			headerRight: (
@@ -54,6 +77,11 @@ export default class Home extends Component{
 				) 
 		})
 
+    // this function hiding the splashscreen right after the component is ready.
+    componentDidMount(){
+    	SplashScreen.hide();
+    }
+
 	render(){
 		return(
 			    <View style = {styles.container}>
@@ -66,7 +94,7 @@ export default class Home extends Component{
 					      longitudeDelta: 0.0421,
 					    }}
 					  />
-			    	<FindButton navigation = {this.props.navigation} findGas = {() => this.props.navigation.setParams({headerMode: 'none'})}/>
+			    	{this.setHomeComponents()}
 				</View>
 			);
 	}
@@ -76,7 +104,7 @@ export default class Home extends Component{
 const styles = StyleSheet.create({
 	container: {
 		height: '100%',
-		padding: 10,
+		paddingHorizontal: 10,
 		alignItems: 'center',
 		justifyContent: 'flex-end'
 	},
