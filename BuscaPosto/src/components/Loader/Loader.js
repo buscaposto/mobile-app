@@ -9,6 +9,12 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class Loader extends Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			timePassed: false,
+		}
+	}
 
 	setRoute = async () => {
 	  try {
@@ -28,8 +34,10 @@ export default class Loader extends Component{
 	}
 
 	componentDidMount(){
-		this.setRoute()
+		setTimeout(() => {this.setRoute()}, 1000)
+			
 	}
+	
 	render(){
 		return(
 			<View style = {styles.container}>

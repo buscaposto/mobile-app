@@ -10,7 +10,7 @@ export default class UserSettings extends Component{
 				<View style = {styles.avatarContainer}>
 					<Image style = {styles.avatarImage} source = {require("../../images/avatarExample.jpg")}/>
 				</View>
-				<UserForm />
+				<UserForm navigation = {this.props.navigation}/>
 			</View>
 		)
 	}

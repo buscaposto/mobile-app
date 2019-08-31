@@ -25,19 +25,18 @@ export default class Home extends Component{
         }
     }
 
-    //Using component did mount to get the user position during component creatio/loading;
-	componentDidMount(){
-		let geoOpition = {
+    updateRegion(){
+    	let geoOpition = {
 			timeOut: 10000,
 		}
-		Geolocation.getCurrentPosition(this.geoSucess, this.geoFailure, geoOpition)
-		// This function needs 3 parameters:
+    	Geolocation.getCurrentPosition(this.geoSucess, this.geoFailure, geoOpition);
+    	// This function needs 3 parameters:
 		// 1 - A function to execute if the requisiton is successfull;
 		// 2 - A function to execute if the requisition fails;
 		// 3 - Requisition Options, which we already defined.
-	}
+    }
 
-	//If the requisition fails we notify the user that his connection isn't good enough
+    //If the requisition fails we notify the user that his connection isn't good enough
 	geoFailure = (err) => {
 		console.log(err);		
 	}
@@ -55,6 +54,11 @@ export default class Home extends Component{
 				longitudeDelta:0.0421,
 			}
 		})
+	}
+
+    //Using component did mount to get the user position during component creatio/loading;
+	componentDidMount(){
+		this.updateRegion()
 	}
 
 	checkCapable(data, processedData){
@@ -119,14 +123,10 @@ export default class Home extends Component{
 
 	//FUNCTION THAT UTILIZES AND FILTER WEB SERVICE REQUEST.
     async searchGasStations(){
-
-    	let geoOpition = {
-			timeOut: 10000,
-		}
-    	Geolocation.getCurrentPosition(this.geoSucess, this.geoFailure, geoOpition);
 		
+		this.updateRegion();
     	// Fetch requisiting gas station list from google places REST API.
-		let response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.region.latitude},${this.state.region.longitude}&rankby=distance&type=gas_station&key=API KEY`)
+		let response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.region.latitude},${this.state.region.longitude}&rankby=distance&type=gas_station&key=API_KEY`)
 		.then((response) => response.json())
 		.then((responseJson) => {
 			this.setState({gasStations: []});
@@ -207,15 +207,20 @@ export default class Home extends Component{
 			    <View style = {styles.container}>
 			    	 <MapView
 			    	 	style = {styles.map}
-					    initialRegion = {this.state.region}
+					    region={this.state.region}
+					    showsUserLocation = {true}
+					    followsUserLocation = {true}
 					  >
 					  	{this.state.gasStations.map((station, index) => (
 						<MapView.Marker 
 						  key = {index}
 					      coordinate={{latitude: station.latitude, longitude: station.longitude}}
-					      title={station.name}/>
+					      title={station.name}
+					      >
+					      <Image style ={{height: 30, width: 30}} source= {require('../../images/customMarker.png')} />
+					    </MapView.Marker>
 						))}
-					  </MapView>
+					 </MapView>
 			    	{this.setHomeComponents()}
 				</View>
 			);
