@@ -3,7 +3,7 @@
  */
 
 import {AppRegistry} from 'react-native';
-import Linker from './src/components/Linker/Linker';
+import Home from './src/components/Home/Home';
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => Linker);
+AppRegistry.registerComponent(appName, () => Home);
