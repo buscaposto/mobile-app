@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, Image} from 'react-native';
-import { createSwitchNavigator, createAppContainer, createStackNavigator } from "react-navigation";
+import { 
+	createSwitchNavigator, 
+	createAppContainer, 
+} from "react-navigation";
+import { createStackNavigator } from 'react-navigation-stack';
 
+import Loader from '../Loader/Loader';
 import Login from '../Login/Login';
 import Home from '../Home/Home';
 import Registration from '../Registration/Registration';
@@ -39,10 +43,11 @@ const SwitchNavigator = createSwitchNavigator({
 
 	Login: Login,
 	Registration: Registration,
+	Loader: Loader,
 	Stack: StackNavigator
 },
 {
-	initialRouteName: 'Stack'
+	initialRouteName: 'Loader'
 });
 
 export default createAppContainer(SwitchNavigator);

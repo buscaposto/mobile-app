@@ -12,7 +12,7 @@ import MapView from 'react-native-maps';
 import NotificationBubble from '../NotificationBubble/NotificationBubble';
 import FindButton from '../FindButton/FindButton';
 import StationList from '../StationList/StationList';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
 
 export default class Home extends Component{
     constructor(props){
@@ -27,7 +27,6 @@ export default class Home extends Component{
 
     //Using component did mount to get the user position during component creatio/loading;
 	componentDidMount(){
-
 		let geoOpition = {
 			timeOut: 10000,
 		}
@@ -40,7 +39,7 @@ export default class Home extends Component{
 
 	//If the requisition fails we notify the user that his connection isn't good enough
 	geoFailure = (err) => {
-		Alert.alert("Couldnt connect to google services, please check your connection.");		
+		console.log(err);		
 	}
 
 	// When the requisition is successfull the values are saved in local variables and then
@@ -127,7 +126,7 @@ export default class Home extends Component{
     	Geolocation.getCurrentPosition(this.geoSucess, this.geoFailure, geoOpition);
 		
     	// Fetch requisiting gas station list from google places REST API.
-		let response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.region.latitude},${this.state.region.longitude}&rankby=distance&type=gas_station&key=AIzaSyCCmMf9l9o0wwN5I41qubvq3UZx7LfNT0M`)
+		let response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.region.latitude},${this.state.region.longitude}&rankby=distance&type=gas_station&key=API KEY`)
 		.then((response) => response.json())
 		.then((responseJson) => {
 			this.setState({gasStations: []});

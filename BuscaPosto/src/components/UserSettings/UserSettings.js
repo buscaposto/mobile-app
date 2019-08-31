@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import UserForm from './UserForm';
-import SplashScreen from 'react-native-splash-screen';
 
 export default class UserSettings extends Component{
-	componentDidMount(){
-    	SplashScreen.hide();
-    }
 
 	render(){
 		return(

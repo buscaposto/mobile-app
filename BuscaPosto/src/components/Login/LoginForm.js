@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, TouchableOpacity, TextInput, StyleSheet} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class LoginForm extends Component{
 	constructor(props){
@@ -12,6 +13,14 @@ export default class LoginForm extends Component{
 		};
 	}
 
+	storeData = async (data) => {
+	  data = JSON.stringify(data);
+	  try {
+	    await AsyncStorage.setItem('logged', data)
+	  } catch (e) {
+	    // saving error
+	  }
+	}
 	makeLogin(){
 
 		if (this.state.email == "" && this.state.pass == ""){
@@ -27,6 +36,11 @@ export default class LoginForm extends Component{
 		}
 
         else {
+        	let data = {
+        		authorized: true,
+        		name: this.state.email
+        	}
+        	this.storeData(data);
           	this.props.navigation.navigate('Stack');
 		}
 	}
