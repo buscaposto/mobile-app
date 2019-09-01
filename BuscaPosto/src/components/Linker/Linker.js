@@ -10,12 +10,17 @@ import Login from '../Login/Login';
 import Home from '../Home/Home';
 import Registration from '../Registration/Registration';
 import UserSettings from '../UserSettings/UserSettings';
+import History from '../History/History';
 
 
 
 const StackNavigator = createStackNavigator({
 	Home: {
 		screen: Home,
+	},
+	History: {
+		screen: History,
+		navigationOptions: () => ({title: 'VISITED STATIONS'})
 	},
 	UserSettings: {
 		screen: UserSettings,

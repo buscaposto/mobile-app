@@ -175,7 +175,7 @@ export default class Home extends Component{
 			title: 'HOME',
 			headerRight: (
 				<TouchableOpacity 
-				onPress = {() => navigation.navigate('Login')}
+				onPress = {() => navigation.navigate('History')}
 				style = {{marginRight: 20}}
 				>
 					<ImageBackground 

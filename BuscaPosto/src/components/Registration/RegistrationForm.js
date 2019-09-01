@@ -13,6 +13,15 @@ export default class RegistrationForm extends Component{
 		}
 	}
 
+	registerUser = async (data) => {
+	  data = JSON.stringify(data);
+	  try {
+	    await AsyncStorage.setItem('logged', data)
+	  } catch (e) {
+	    // saving error
+	  }
+	}
+
 	makeRegister(){
 		
 		let letterNumber = /^[0-9a-zA-Z]+$/;
@@ -43,7 +52,12 @@ export default class RegistrationForm extends Component{
 		else if (this.state.pass.includes(' ')){
 			this.setState({validationText: "Password can't contain a blank space."});
 		}else{
-			this.setState({validationText: "Registred Successfully."});
+			data = {
+				authorized: true,
+				name: this.state.email
+			};
+			this.registerUser(data);
+			this.props.navigation.navigate('Stack');
 		}
 
     }
