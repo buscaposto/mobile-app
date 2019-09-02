@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	name: {
+		maxWidth: 60,
 		fontWeight: 'bold',
 		fontSize: 16,
 		color: '#FFF'
@@ -83,10 +84,6 @@ const styles = StyleSheet.create({
 		color: '#FFF'
 	},
 	price: {
-		height: '90%',
-		padding: 10,
-		borderRadius: 20,
-		backgroundColor: '#555',
 		fontWeight: 'bold',
 		color: '#FFF',
 		fontSize: 16,
