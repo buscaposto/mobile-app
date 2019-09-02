@@ -64,7 +64,9 @@ const styles = StyleSheet.create({
 	division: {
 		height: '100%',
 		width: 2,
-		backgroundColor: '#777'
+		backgroundColor: '#777',
+		marginRight: 5,
+		marginLeft: 5
 	},
 	rating: {
 		flexDirection: 'row',
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
 		color: '#FFF'
 	},
 	price: {
-		height: 40,
+		height: '90%',
 		padding: 10,
 		borderRadius: 20,
 		backgroundColor: '#555',

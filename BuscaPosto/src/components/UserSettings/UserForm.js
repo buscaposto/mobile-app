@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Image,Text, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
+import {View, Image,Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView} from 'react-native';
 import NameForm from './NameForm';
 import FuelForm from './FuelForm';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -64,26 +64,28 @@ export default class UserForm extends Component{
 
 	render(){
 		return(
-			<View style = {styles.container}>
-				<NameForm />
-				<View style = {styles.line} />
-				<FuelForm />
-				<View style = {styles.line} />
-				<View style = {styles.nightMode}>
-					<Text style = {styles.nightTitle}>Night Mode: </Text>
-					<TouchableOpacity onPress = {() => this.changeMapStyle()}>
-						{this.renderImage()}
-					</TouchableOpacity>
+			<ScrollView>
+				<View style = {styles.container}>
+					<NameForm />
+					<View style = {styles.line} />
+					<FuelForm />
+					<View style = {styles.line} />
+					<View style = {styles.nightMode}>
+						<Text style = {styles.nightTitle}>Night Mode: </Text>
+						<TouchableOpacity onPress = {() => this.changeMapStyle()}>
+							{this.renderImage()}
+						</TouchableOpacity>
+					</View>
+					<View style = {styles.bottomView}>
+						<TouchableOpacity 
+						style = {styles.logOutButton}
+						onPress = {() => this.logOut()}
+						>
+							<Text style = {styles.textButton}> LOG OUT </Text>
+						</TouchableOpacity>
+					</View>
 				</View>
-				<View style = {styles.bottomView}>
-					<TouchableOpacity 
-					style = {styles.logOutButton}
-					onPress = {() => this.logOut()}
-					>
-						<Text style = {styles.textButton}> LOG OUT </Text>
-					</TouchableOpacity>
-				</View>
-			</View>
+			</ScrollView>
 			)
 	}
 }
@@ -92,6 +94,7 @@ const styles = StyleSheet.create({
 	container:{
 		flex: 1,
 		alignItems: 'center',
+		justifyContent: 'center'
 	},
 	line: {
 		height: 5,
@@ -100,17 +103,16 @@ const styles = StyleSheet.create({
 		backgroundColor: '#5D5D5D'
 	},
 	bottomView:{
-		width: '100%', 
-		position: 'absolute', 
-		bottom: 0
+		width: '100%',
 	},
 	logOutButton:{
-		alignSelf: 'stretch',
+		width: lineWidth,
 		height: 40,
 		alignItems: 'center',
 		justifyContent: 'center',
 		backgroundColor: '#FFE600',
 		borderRadius: 5,
+		marginTop: 20,
 	},
 	textButton:{
 		fontWeight: 'bold',
