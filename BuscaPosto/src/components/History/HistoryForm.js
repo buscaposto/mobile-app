@@ -7,20 +7,23 @@ export default class HistoryForm extends Component{
 		return(
 			<View style = {styles.container}>
 				<HistoryItem 
+				navigation = {this.props.navigation}
 				name = "Posto Ipiranga"
 				like = "1209"
 				dislike = "323"
 				defaultFuel = "G"
 				fuelPrice = "4.324"
 				/>
-				<HistoryItem 
+				<HistoryItem
+				navigation = {this.props.navigation} 
 				name = "Posto Tigrão"
 				like = "629"
 				dislike = "115"
 				defaultFuel = "G"
 				fuelPrice = "4.311"
 				/>
-				<HistoryItem 
+				<HistoryItem
+				navigation = {this.props.navigation} 
 				name = "Posto Shell Via"
 				like = "1031"
 				dislike = "443"

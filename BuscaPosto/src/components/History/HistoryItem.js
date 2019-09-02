@@ -1,10 +1,26 @@
 import React, {Component} from 'react';
-import {View, Image, Text, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, Image, Text, StyleSheet} from 'react-native';
 
 export default class HistoryItem extends Component{
+	constructor(props){
+		super(props);
+		this.state = {
+			station: {
+				name: this.props.name,
+				like: this.props.like,
+				dislike: this.props.dislike,
+				defaultFuel: this.props.defaultFuel,
+				fuelPrice: this.props.fuelPrice
+			}
+		};
+	}
 	render(){
 		return(
-			<View style = {styles.container}>
+			<TouchableOpacity 
+			style = {styles.container}
+			onPress = {() => this.props.navigation.navigate('StationScreen', 
+				{station: this.state.station, name: this.state.station.name})}
+			>
 				<Text style = {styles.name}>{this.props.name}</Text>
 				<View style = {styles.division}/>
 				<View style = {styles.rating}>
@@ -22,8 +38,8 @@ export default class HistoryItem extends Component{
 					<Text style = {styles.ratingValue}> {this.props.dislike} </Text>
 				</View>
 				<View style = {styles.division}/>
-				<Text style = {styles.price}> {this.props.defaultFuel}: {this.props.fuelPrice} </Text>	
-			</View>
+				<Text style = {styles.price}> {this.props.defaultFuel}: {this.props.fuelPrice} </Text>
+			</TouchableOpacity>	
 		)
 	}
 }

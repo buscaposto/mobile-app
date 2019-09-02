@@ -6,7 +6,7 @@ export default class History extends Component{
 	render(){
 		return(
 			<View style = {styles.container}>
-				<HistoryForm />
+				<HistoryForm navigation = {this.props.navigation}/>
 			</View>
 		)
 	}

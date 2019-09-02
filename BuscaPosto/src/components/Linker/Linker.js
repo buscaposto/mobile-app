@@ -11,6 +11,7 @@ import Home from '../Home/Home';
 import Registration from '../Registration/Registration';
 import UserSettings from '../UserSettings/UserSettings';
 import History from '../History/History';
+import StationScreen from '../StationScreen/StationScreen';
 
 
 
@@ -21,6 +22,9 @@ const StackNavigator = createStackNavigator({
 	History: {
 		screen: History,
 		navigationOptions: () => ({title: 'VISITED STATIONS'})
+	},
+	StationScreen: {
+		screen: StationScreen,
 	},
 	UserSettings: {
 		screen: UserSettings,

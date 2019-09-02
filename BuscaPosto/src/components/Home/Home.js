@@ -13,6 +13,10 @@ import NotificationBubble from '../NotificationBubble/NotificationBubble';
 import FindButton from '../FindButton/FindButton';
 import StationList from '../StationList/StationList';
 import Geolocation from '@react-native-community/geolocation';
+import MapStyle from '../../mapstyles/map.js';
+import DefaultMapStyle from '../../mapstyles/defaultMap.js';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 export default class Home extends Component{
     constructor(props){
@@ -21,9 +25,23 @@ export default class Home extends Component{
         	searching: false,
         	gasStations: [],
         	region: {latitude: -15, longitude: -47, latitudeDelta: 0.1022, longitudeDelta:0.0521,},
-        	filter: 'distance'
+        	filter: 'distance',
+        	light: false,
         }
     }
+
+    setMapStyle = async () => {
+	  try {
+	    const value = await AsyncStorage.getItem('settings');
+	    response = JSON.parse(value);
+
+	    if(response.lightMode) {
+	      this.setState({light: true});
+	    }
+	  } catch(e) {
+	    this.setState({light: false});
+	  }
+	}
 
     updateRegion(){
     	let geoOpition = {
@@ -58,7 +76,8 @@ export default class Home extends Component{
 
     //Using component did mount to get the user position during component creatio/loading;
 	componentDidMount(){
-		this.updateRegion()
+		this.updateRegion();
+		this.setMapStyle();
 	}
 
 	checkCapable(data, processedData){
@@ -126,7 +145,7 @@ export default class Home extends Component{
 		
 		this.updateRegion();
     	// Fetch requisiting gas station list from google places REST API.
-		let response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.region.latitude},${this.state.region.longitude}&rankby=distance&type=gas_station&key=API_KEY`)
+		let response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.region.latitude},${this.state.region.longitude}&rankby=distance&type=gas_station&key=PAI_KEY`)
 		.then((response) => response.json())
 		.then((responseJson) => {
 			this.setState({gasStations: []});
@@ -208,6 +227,7 @@ export default class Home extends Component{
 			    	 <MapView
 			    	 	style = {styles.map}
 					    region={this.state.region}
+					    customMapStyle = {this.state.light? DefaultMapStyle: MapStyle}
 					    showsUserLocation = {true}
 					    followsUserLocation = {true}
 					  >
