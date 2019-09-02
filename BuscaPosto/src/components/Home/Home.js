@@ -26,7 +26,7 @@ export default class Home extends Component{
         	gasStations: [],
         	region: {latitude: -15, longitude: -47, latitudeDelta: 0.1022, longitudeDelta:0.0521,},
         	filter: 'distance',
-        	light: false,
+        	light: true,
         }
     }
 
@@ -37,9 +37,11 @@ export default class Home extends Component{
 
 	    if(response.lightMode) {
 	      this.setState({light: true});
+	    }else{
+	      this.setState({light: false});
 	    }
 	  } catch(e) {
-	    this.setState({light: false});
+	    this.setState({light: true});
 	  }
 	}
 
@@ -145,7 +147,7 @@ export default class Home extends Component{
 		
 		this.updateRegion();
     	// Fetch requisiting gas station list from google places REST API.
-		let response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.region.latitude},${this.state.region.longitude}&rankby=distance&type=gas_station&key=PAI_KEY`)
+		let response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.region.latitude},${this.state.region.longitude}&rankby=distance&type=gas_station&key=API_KEY`)
 		.then((response) => response.json())
 		.then((responseJson) => {
 			this.setState({gasStations: []});
