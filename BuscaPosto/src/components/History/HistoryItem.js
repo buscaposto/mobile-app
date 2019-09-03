@@ -9,6 +9,8 @@ export default class HistoryItem extends Component{
 				name: this.props.name,
 				like: this.props.like,
 				dislike: this.props.dislike,
+				latitude: this.props.latitude,
+				longitude: this.props.longitude,
 				defaultFuel: this.props.defaultFuel,
 				fuelPrice: this.props.fuelPrice
 			}
@@ -21,7 +23,9 @@ export default class HistoryItem extends Component{
 			onPress = {() => this.props.navigation.navigate('StationScreen', 
 				{station: this.state.station, name: this.state.station.name})}
 			>
-				<Text style = {styles.name}>{this.props.name}</Text>
+				<View style = {styles.nameContainer}>
+					<Text style = {styles.name}>{this.props.name}</Text>
+				</View>
 				<View style = {styles.division}/>
 				<View style = {styles.rating}>
 					<Image 
@@ -56,8 +60,12 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		alignItems: 'center'
 	},
+	nameContainer:{
+		maxWidth: 70,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
 	name: {
-		maxWidth: 60,
 		fontWeight: 'bold',
 		fontSize: 16,
 		color: '#FFF'

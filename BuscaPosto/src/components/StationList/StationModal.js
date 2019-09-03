@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
-	View, 
+	View,
+	Alert, 
 	Text, 
 	TouchableOpacity, 
 	StyleSheet, 
@@ -8,7 +9,7 @@ import {
 	Image,
 	Linking
 } from 'react-native';
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 // Making a modal 40% height and 90% width
 modalHeight = "35%";
@@ -23,7 +24,51 @@ export default class StationModal extends Component{
 	constructor(props){
 		super(props);
 		this.url = `https://www.google.com/maps/dir/?api=1&origin=${this.props.userPos.latitude},${this.props.userPos.longitude}&destination=${this.props.info.latitude},${this.props.info.longitude}&travelmode=driving`
+		this.state = {
+			history: {
+				stations:[],
+			}
+		}
+	}
+	checkExists(value, list){
+		for (let i = 0; i < list.length; i++){
+			if (list[i].latitude == value){
+				return true;
+			}
+		}
+		return false;
+	}
 
+	async saveStation(){		
+		let newStation = {
+			latitude: this.props.info.latitude,
+			longitude: this.props.info.longitude,
+			name: this.props.info.name
+		};
+
+		try {
+		  const value = await AsyncStorage.getItem("history");
+		  history = JSON.parse(value);
+
+		  if(!this.checkExists(newStation.latitude, history.stations)){
+		  	history.stations.push(newStation);
+		  }
+		  const data = JSON.stringify(history);
+		  await AsyncStorage.setItem("history", data);
+
+		} catch (e) {
+		    history = {
+		    	stations: [newStation]
+		    };
+		    const data = JSON.stringify(history);
+		  	await AsyncStorage.setItem("history", data);
+		}
+	}
+
+	goToGas(){
+		this.saveStation();
+		this.props.closeModal();
+		Linking.openURL(this.url);
 	}
 
 	render(){
@@ -67,7 +112,7 @@ export default class StationModal extends Component{
 				<View style = {styles.bottomContentContainer}>
 					<TouchableOpacity 
 						style = {styles.goButton}
-						onPress = {()=> Linking.openURL(this.url)}
+						onPress = {()=> this.goToGas()}
 					>
 						<Text style = {{fontWeight: 'bold', fontSize: 16, color: '#000'}}> GO! </Text>
 					</TouchableOpacity>

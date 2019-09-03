@@ -8,6 +8,7 @@ import {
 	Dimensions, 
 	StyleSheet
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const boxHeight = Dimensions.get('window').height * 0.2;
 const bottomLength = Dimensions.get('window').width;
@@ -20,6 +21,31 @@ export default class StationScreen extends Component{
 			gasPrice: '3.22',
 			likeSelected: false,
 			dislikeSelected: false
+		}
+	}
+
+	getStationIndex(value, list){
+		for (let i = 0; i < list.length; i++){
+			if (list[i].latitude == value){
+				return i;
+			}
+		}
+		return -1;
+	}
+	async deleteStation(){		
+		try {
+		  const value = await AsyncStorage.getItem("history");
+		  history = JSON.parse(value);
+
+		  stationIndex = this.getStationIndex(this.state.station.latitude, history.stations);
+		  if(stationIndex >= 0){
+		  	history.stations.splice(stationIndex, 1);
+		  }
+		  const data = JSON.stringify(history);
+		  await AsyncStorage.setItem("history", data);
+		  this.props.navigation.navigate('Loader');
+		} catch (e) {
+		    console.log(e)
 		}
 	}
 
@@ -107,6 +133,7 @@ export default class StationScreen extends Component{
 				<View style = {styles.bottomView}>
 					<TouchableOpacity 
 					style = {styles.confirmButton}
+					onPress = {() => this.deleteStation()}
 					>
 						<Text style = {styles.textButton}> CONFIRM </Text>
 					</TouchableOpacity>

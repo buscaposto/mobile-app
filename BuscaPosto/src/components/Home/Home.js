@@ -144,7 +144,6 @@ export default class Home extends Component{
 
 	//FUNCTION THAT UTILIZES AND FILTER WEB SERVICE REQUEST.
     async searchGasStations(){
-		
 		this.updateRegion();
     	// Fetch requisiting gas station list from google places REST API.
 		let response = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.region.latitude},${this.state.region.longitude}&rankby=distance&type=gas_station&key=API_KEY`)
@@ -205,7 +204,7 @@ export default class Home extends Component{
 					>
 						<NotificationBubble 
 						color = "#D92000"
-						value = {2}
+						value = {navigation.getParam('size', 4)}
 						/>
 					</ImageBackground> 
 				</TouchableOpacity>

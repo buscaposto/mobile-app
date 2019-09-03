@@ -22,7 +22,7 @@ export default class Loader extends Component{
 	    response = JSON.parse(value);
 
 	    if(response.authorized == true) {
-	      this.props.navigation.navigate('Stack');
+	      this.props.navigation.navigate('Stack', {size: 4});
 	    
 	    }else{
 	      this.props.navigation.navigate('Login');
